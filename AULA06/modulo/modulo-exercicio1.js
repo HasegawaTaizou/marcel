@@ -31,53 +31,54 @@ const mostrarRelatorio = function (
     `);
 };
 
-const isNumerosDentroIntervalo = function () {
-  numero1 = 0;
-  numero2 = 0;
-  numero3 = 0;
-  numero4 = 0;
-
+const validarInputs = function () {
   let status = true;
-
-  if (Number(numero1) <= 100 && Number(numero1) >= 0) {
-    console.log("ERRO: NÚMERO FORA DO INTERVALO PERMITIDO");
+  let mensagem = "";
+  if (!isNumerosDentroIntervalo()) {
+    mensagem = "NÚMERO(S) FORA DO INTERVALO";
+    console.log(mensagem);
     status = false;
   }
-  if (Number(numero2) <= 100 && Number(numero2) >= 0) {
-    console.log("ERRO: NÚMERO FORA DO INTERVALO PERMITIDO");
+  if (isNumerosVazio) {
+    mensagem = "NÚMERO(S) VAZIO(S)";
+    console.log(mensagem);
     status = false;
   }
-  if (Number(numero3) <= 100 && Number(numero3) >= 0) {
-    console.log("ERRO: NÚMERO FORA DO INTERVALO PERMITIDO");
-    status = false;
-  }
-  if (Number(numero4) <= 100 && Number(numero4) >= 0) {
-    console.log("ERRO: NÚMERO FORA DO INTERVALO PERMITIDO");
+  if (isNumerosValidos) {
+    mensagem = "NÚMERO(S) INVÁLIDO(S)";
+    console.log(mensagem);
     status = false;
   }
   return status;
 };
 
-const isNumerosVazio = function (numero1, numero2, numero3, numero4) {
-  let status = true;
+const isNumerosDentroIntervalo = function () {
+  if (
+    (Number(numero1) <= 100 && Number(numero1) >= 0) ||
+    (Number(numero2) <= 100 && Number(numero2) >= 0) ||
+    (Number(numero3) <= 100 && Number(numero3) >= 0) ||
+    (Number(numero4) <= 100 && Number(numero4) >= 0)
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
 
-  if (numero1 == "") {
-    console.log("ERRO: NÚMERO NÃO PODE FICAR VAZIO");
-    status = false;
+const isNumerosVazio = function () {
+  if (numero1 == "" || numero2 == "" || numero3 == "" || numero4 == "") {
+    return true;
+  } else {
+    return false;
   }
-  if (numero2 == "") {
-    console.log("ERRO: NÚMERO NÃO PODE FICAR VAZIO");
-    status = false;
+};
+
+const isNumerosValidos = function () {
+  if (isNaN(numero1) || isNaN(numero2) || isNaN(numero3) || isNaN(numero4)) {
+    return true;
+  } else {
+    return false;
   }
-  if (numero3 == "") {
-    console.log("ERRO: NÚMERO NÃO PODE FICAR VAZIO");
-    status = false;
-  }
-  if (numero4 == "") {
-    console.log("ERRO: NÚMERO NÃO PODE FICAR VAZIO");
-    status = false;
-  }
-  return status;
 };
 
 const isAlunoAprovado = function (numero1, numero2, numero3, numero4) {
@@ -119,7 +120,7 @@ const verificarSexoAluno = function (sexoAluno) {
   } else if (sexo == "F") {
     sexo = "Aluna";
   } else {
-    sexo = "SEXO INEXISTENTE";
+    return false;
   }
   return sexo;
 };
@@ -131,7 +132,7 @@ const verificarSexoProfessor = function (sexoProfessor) {
   } else if (sexo == "F") {
     sexo = sexo = "Professora";
   } else {
-    sexo = "SEXO INEXISTENTE";
+    return false;
   }
 
   return sexo;
@@ -139,8 +140,7 @@ const verificarSexoProfessor = function (sexoProfessor) {
 
 module.exports = {
   mostrarRelatorio,
-  isNumerosDentroIntervalo,
-  isNumerosVazio,
+  validarInputs,
   isAlunoAprovado,
   verificarSexoAluno,
   verificarSexoProfessor,

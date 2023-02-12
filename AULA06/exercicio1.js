@@ -14,11 +14,22 @@ entradaDados.question("Digite o nome do aluno: ", function (nome) {
     let nomeProfessor = nome;
 
     entradaDados.question("Digite o sexo do aluno: ", function (sexo) {
-      let sexoAluno = moduloExercicio1.verificarSexoAluno(sexo);
+      let sexoAluno;
+      if (moduloExercicio1.verificarSexoAluno(sexo)) {
+        sexoAluno = moduloExercicio1.verificarSexoAluno(sexo);
+      } else {
+        console.log('DIGITE "M" PARA MASCULINO, OU "F" PARA FEMININO');
+        entradaDados.close();
+      }
 
       entradaDados.question("Digite o sexo do professor: ", function (sexo) {
-        let sexoProfessor = moduloExercicio1.verificarSexoProfessor(sexo);
-
+        let sexoProfessor;
+        if (moduloExercicio1.verificarSexoProfessor(sexo)) {
+          sexoProfessor = moduloExercicio1.verificarSexoProfessor(sexo);
+        } else {
+          console.log('DIGITE "M" PARA MASCULINO, OU "F" PARA FEMININO');
+          entradaDados.close();
+        }
         entradaDados.question("Digite o nome do curso: ", function (curso) {
           let nomeCurso = curso;
 
@@ -52,7 +63,8 @@ entradaDados.question("Digite o nome do aluno: ", function (nome) {
                                   segundaNota,
                                   terceiraNota,
                                   quartaNota
-                                )
+                                ) &&
+                                moduloExercicio1.validarInputs()
                               ) {
                                 moduloExercicio1.mostrarRelatorio(
                                   nomeAluno,
@@ -67,27 +79,28 @@ entradaDados.question("Digite o nome do aluno: ", function (nome) {
                                   quartaNota,
                                   "NÃO PRECISOU FAZER"
                                 );
-                              } else {
-                                entradaDados.question(
-                                  "Insira a nota do exame: ",
-                                  function (nota) {
-                                    moduloExercicio1.fazerRecuperacao(nota);
-                                    moduloExercicio1.mostrarRelatorio(
-                                      nomeAluno,
-                                      nomeProfessor,
-                                      sexoAluno,
-                                      sexoProfessor,
-                                      nomeCurso,
-                                      nomeDisciplina,
-                                      primeiraNota,
-                                      segundaNota,
-                                      terceiraNota,
-                                      quartaNota,
-                                      nota
-                                    );
-                                  }
-                                );
                               }
+                              // else {
+                              //   entradaDados.question(
+                              //     "Insira a nota do exame: ",
+                              //     function (nota) {
+                              //       moduloExercicio1.fazerRecuperacao(nota);
+                              //       moduloExercicio1.mostrarRelatorio(
+                              //         nomeAluno,
+                              //         nomeProfessor,
+                              //         sexoAluno,
+                              //         sexoProfessor,
+                              //         nomeCurso,
+                              //         nomeDisciplina,
+                              //         primeiraNota,
+                              //         segundaNota,
+                              //         terceiraNota,
+                              //         quartaNota,
+                              //         nota
+                              //       );
+                              //     }
+                              //   );
+                              // }
                             }
                           );
                         }
