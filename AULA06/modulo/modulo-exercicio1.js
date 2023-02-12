@@ -1,5 +1,4 @@
 let numero1, numero2, numero3, numero4;
-let notaExame;
 let mediaFinal;
 let situacao;
 let mediaRecuperacao;
@@ -14,7 +13,8 @@ const mostrarRelatorio = function (
   numero1,
   numero2,
   numero3,
-  numero4
+  numero4,
+  notaExame
 ) {
   // isNumerosDentroIntervalo()
   // isNumerosVazio()
@@ -95,13 +95,14 @@ const isAlunoAprovado = function (numero1, numero2, numero3, numero4) {
     return true;
   } else if (mediaFinal >= 50 && mediaFinal < 70) {
     fazerRecuperacao();
+    return false;
   } else {
     return false;
   }
 };
 
-const fazerRecuperacao = function () {
-  mediaRecuperacao = (mediaFinal + notaExame) / 2;
+const fazerRecuperacao = function (notaExame) {
+  mediaRecuperacao = (Number(mediaFinal) + Number(notaExame)) / 2;
 
   if (mediaRecuperacao >= 60) {
     situacao = "APROVADO POR RECUPERAÇÃO";
@@ -117,17 +118,20 @@ const verificarSexoAluno = function (sexoAluno) {
     sexo = "Aluno";
   } else if (sexo == "F") {
     sexo = "Aluna";
+  } else {
+    sexo = "SEXO INEXISTENTE";
   }
-
   return sexo;
 };
 
 const verificarSexoProfessor = function (sexoProfessor) {
   let sexo = sexoProfessor;
-  if (sexo.startsWith("M")) {
-    sexo = sexo.replace("M", "Professor");
-  } else if (sexo.startsWith("F")) {
-    sexo = sexo.replace("F", "Professora");
+  if (sexo == "M") {
+    sexo = sexo = "Professor";
+  } else if (sexo == "F") {
+    sexo = sexo = "Professora";
+  } else {
+    sexo = "SEXO INEXISTENTE";
   }
 
   return sexo;
@@ -140,4 +144,5 @@ module.exports = {
   isAlunoAprovado,
   verificarSexoAluno,
   verificarSexoProfessor,
+  fazerRecuperacao,
 };
