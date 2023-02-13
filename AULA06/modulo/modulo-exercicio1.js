@@ -31,53 +31,52 @@ const mostrarRelatorio = function (
     `);
 };
 
-const validarInputs = function () {
+const validarInputs = function (numero1, numero2, numero3, numero4) {
   let status = true;
   let mensagem = "";
-  if (!isNumerosDentroIntervalo()) {
+  if (isNumerosDentroIntervalo(numero1, numero2, numero3, numero4)) {
     mensagem = "NÚMERO(S) FORA DO INTERVALO";
     console.log(mensagem);
     status = false;
-  }
-  if (isNumerosVazio) {
+  } else if (isNumerosVazio(numero1, numero2, numero3, numero4)) {
     mensagem = "NÚMERO(S) VAZIO(S)";
     console.log(mensagem);
     status = false;
-  }
-  if (isNumerosValidos) {
+  } else if (isNumerosValidos(numero1, numero2, numero3, numero4)) {
     mensagem = "NÚMERO(S) INVÁLIDO(S)";
     console.log(mensagem);
     status = false;
+  } else {
+    return status;
   }
-  return status;
 };
 
-const isNumerosDentroIntervalo = function () {
+const isNumerosDentroIntervalo = function (numero1, numero2, numero3, numero4) {
   if (
     (Number(numero1) <= 100 && Number(numero1) >= 0) ||
     (Number(numero2) <= 100 && Number(numero2) >= 0) ||
     (Number(numero3) <= 100 && Number(numero3) >= 0) ||
     (Number(numero4) <= 100 && Number(numero4) >= 0)
   ) {
-    return false;
-  } else {
     return true;
+  } else {
+    return false;
   }
 };
 
-const isNumerosVazio = function () {
+const isNumerosVazio = function (numero1, numero2, numero3, numero4) {
   if (numero1 == "" || numero2 == "" || numero3 == "" || numero4 == "") {
-    return true;
-  } else {
     return false;
+  } else {
+    return true;
   }
 };
 
-const isNumerosValidos = function () {
+const isNumerosValidos = function (numero1, numero2, numero3, numero4) {
   if (isNaN(numero1) || isNaN(numero2) || isNaN(numero3) || isNaN(numero4)) {
-    return true;
-  } else {
     return false;
+  } else {
+    return true;
   }
 };
 
@@ -145,4 +144,7 @@ module.exports = {
   verificarSexoAluno,
   verificarSexoProfessor,
   fazerRecuperacao,
+  isNumerosDentroIntervalo,
+  isNumerosValidos,
+  isNumerosVazio,
 };

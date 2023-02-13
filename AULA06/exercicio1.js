@@ -58,49 +58,68 @@ entradaDados.question("Digite o nome do aluno: ", function (nome) {
                             function (nota4) {
                               let quartaNota = nota4;
                               if (
-                                moduloExercicio1.isAlunoAprovado(
+                                moduloExercicio1.isNumerosDentroIntervalo(
                                   primeiraNota,
                                   segundaNota,
                                   terceiraNota,
                                   quartaNota
                                 ) &&
-                                moduloExercicio1.validarInputs()
-                              ) {
-                                moduloExercicio1.mostrarRelatorio(
-                                  nomeAluno,
-                                  nomeProfessor,
-                                  sexoAluno,
-                                  sexoProfessor,
-                                  nomeCurso,
-                                  nomeDisciplina,
+                                moduloExercicio1.isNumerosValidos(
                                   primeiraNota,
                                   segundaNota,
                                   terceiraNota,
-                                  quartaNota,
-                                  "NÃO PRECISOU FAZER"
-                                );
+                                  quartaNota
+                                ) &&
+                                moduloExercicio1.isNumerosVazio(
+                                  primeiraNota,
+                                  segundaNota,
+                                  terceiraNota,
+                                  quartaNota
+                                )
+                              ) {
+                                if (
+                                  moduloExercicio1.isAlunoAprovado(
+                                    primeiraNota,
+                                    segundaNota,
+                                    terceiraNota,
+                                    quartaNota
+                                  )
+                                ) {
+                                  moduloExercicio1.mostrarRelatorio(
+                                    nomeAluno,
+                                    nomeProfessor,
+                                    sexoAluno,
+                                    sexoProfessor,
+                                    nomeCurso,
+                                    nomeDisciplina,
+                                    primeiraNota,
+                                    segundaNota,
+                                    terceiraNota,
+                                    quartaNota,
+                                    "NÃO PRECISOU FAZER"
+                                  );
+                                } else {
+                                  entradaDados.question(
+                                    "Insira a nota do exame: ",
+                                    function (nota) {
+                                      moduloExercicio1.fazerRecuperacao(nota);
+                                      moduloExercicio1.mostrarRelatorio(
+                                        nomeAluno,
+                                        nomeProfessor,
+                                        sexoAluno,
+                                        sexoProfessor,
+                                        nomeCurso,
+                                        nomeDisciplina,
+                                        primeiraNota,
+                                        segundaNota,
+                                        terceiraNota,
+                                        quartaNota,
+                                        nota
+                                      );
+                                    }
+                                  );
+                                }
                               }
-                              // else {
-                              //   entradaDados.question(
-                              //     "Insira a nota do exame: ",
-                              //     function (nota) {
-                              //       moduloExercicio1.fazerRecuperacao(nota);
-                              //       moduloExercicio1.mostrarRelatorio(
-                              //         nomeAluno,
-                              //         nomeProfessor,
-                              //         sexoAluno,
-                              //         sexoProfessor,
-                              //         nomeCurso,
-                              //         nomeDisciplina,
-                              //         primeiraNota,
-                              //         segundaNota,
-                              //         terceiraNota,
-                              //         quartaNota,
-                              //         nota
-                              //       );
-                              //     }
-                              //   );
-                              // }
                             }
                           );
                         }
