@@ -1,4 +1,3 @@
-let numero1, numero2, numero3, numero4;
 let mediaFinal;
 let situacao;
 let mediaRecuperacao;

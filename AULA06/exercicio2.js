@@ -10,7 +10,8 @@ var entradaDados = readline.createInterface({
 entradaDados.question("Digite a tabuada inicial: ", function (tabuada) {
   let tabuadaInicial;
   if (
-    moduloExercicio2.verificarValorVazio(tabuada) &&
+    moduloExercicio2.verificarValorVazio(tabuada)
+     &&
     moduloExercicio2.verificarValorTabuadaInicial(tabuada)
   ) {
     tabuadaInicial = tabuada;
@@ -24,11 +25,17 @@ entradaDados.question("Digite a tabuada inicial: ", function (tabuada) {
     if (
       moduloExercicio2.verificarValorVazio(tabuada) &&
       moduloExercicio2.verificarValorTabuadaFinal(tabuada)
-    ) {
+    ) 
+    {
       tabuadaFinal = tabuada;
+      if(moduloExercicio2.verificarValorMaior(tabuadaInicial, tabuadaFinal)) {
+      } else {
+        entradaDados.close()
+        console.log('DIGITE A TABUADA INICIAL COM UM VALOR MENOR QUE A TABUADA FINAL');
+      }
     } else {
-      console.log("DIGITE A TABUADA FINAL");
       entradaDados.close();
+      console.log("DIGITE A TABUADA FINAL");
     }
 
     entradaDados.question("Digite o contador inicial: ", function (contador) {
@@ -39,8 +46,8 @@ entradaDados.question("Digite a tabuada inicial: ", function (tabuada) {
       ) {
         contadorInicial = contador;
       } else {
-        console.log("DIGITE O CONTADOR INICIAL");
         entradaDados.close();
+        console.log("DIGITE O CONTADOR INICIAL");
       }
 
       entradaDados.question("Digite o contador final: ", function (contador) {
@@ -50,6 +57,11 @@ entradaDados.question("Digite a tabuada inicial: ", function (tabuada) {
           moduloExercicio2.verificarValorContadorFinal(contador)
         ) {
           contadorFinal = contador;
+          if(moduloExercicio2.verificarValorMaior(contadorInicial, contadorFinal)) {
+          } else {
+            console.log('DIGITE O CONTADOR INICIAL COM UM VALOR MENOR QUE O CONTADOR FINAL');
+            entradaDados.close()
+          }
         } else {
           console.log("DIGITE O CONTADOR FINAL");
           entradaDados.close();

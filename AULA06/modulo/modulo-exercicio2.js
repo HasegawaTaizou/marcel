@@ -69,6 +69,14 @@ const verificarValorContadorFinal = function (contadorFinal) {
   }
 };
 
+const verificarValorMaior = function (valor1, valor2) {
+  if(valor1 > valor2) {
+    return false
+  } else {
+    return true
+  }
+}
+
 module.exports = {
   mostrarResultado,
   verificarValorVazio,
@@ -76,4 +84,5 @@ module.exports = {
   verificarValorTabuadaFinal,
   verificarValorContadorInicial,
   verificarValorContadorFinal,
+  verificarValorMaior,
 };
