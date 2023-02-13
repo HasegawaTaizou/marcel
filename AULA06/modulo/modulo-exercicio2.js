@@ -34,8 +34,6 @@ const verificarValorVazio = function (numero) {
   }
 };
 
-// A entrada da tabuada deverá ser entre 2 e 100, não sendo permitido
-// outros valores;
 const verificarValorTabuadaInicial = function (tabuadaInicial) {
   if (Number(tabuadaInicial) >= 2 && Number(tabuadaInicial) <= 100) {
     return true;
@@ -52,7 +50,6 @@ const verificarValorTabuadaFinal = function (tabuadaFinal) {
   }
 };
 
-//O valor até onde será calculada a tabuada deverá ser entre 1 e 50;
 const verificarValorContadorInicial = function (contadorInicial) {
   if (Number(contadorInicial) >= 1 && Number(contadorInicial) <= 50) {
     return true;
