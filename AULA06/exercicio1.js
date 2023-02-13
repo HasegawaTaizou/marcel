@@ -98,7 +98,7 @@ entradaDados.question("Digite o nome do aluno: ", function (nome) {
                                   primeiraNota,
                                   segundaNota,
                                   terceiraNota,
-                                  quartaNota
+                                  quartaNota 
                                 )
                               ) {
                                 if (
