@@ -8,10 +8,22 @@ var entradaDados = readline.createInterface({
 });
 
 entradaDados.question("Digite o nome do aluno: ", function (nome) {
-  let nomeAluno = nome;
+  let nomeAluno;
+  if (moduloExercicio1.verificarNomeAluno(nome)) {
+    nomeAluno = nome;
+  } else {
+    console.log("PREENCHA O NOME DO ALUNO");
+    entradaDados.close();
+  }
 
   entradaDados.question("Digite o nome do professor: ", function (nome) {
-    let nomeProfessor = nome;
+    let nomeProfessor;
+    if (moduloExercicio1.verificarNomeProfessor(nome)) {
+      nomeProfessor = nome;
+    } else {
+      console.log("PREENCHA O NOME DO PROFESSOR");
+      entradaDados.close();
+    }
 
     entradaDados.question("Digite o sexo do aluno: ", function (sexo) {
       let sexoAluno;
@@ -31,12 +43,24 @@ entradaDados.question("Digite o nome do aluno: ", function (nome) {
           entradaDados.close();
         }
         entradaDados.question("Digite o nome do curso: ", function (curso) {
-          let nomeCurso = curso;
+          let nomeCurso;
+          if (moduloExercicio1.verificarNomeCurso(curso)) {
+            nomeCurso = curso;
+          } else {
+            console.log("PREENCHA O NOME DO CURSO");
+            entradaDados.close();
+          }
 
           entradaDados.question(
             "Digite o nome da disciplina: ",
             function (disciplina) {
-              let nomeDisciplina = disciplina;
+              let nomeDisciplina;
+              if (moduloExercicio1.verificarNomeDisciplina(disciplina)) {
+                nomeDisciplina = disciplina;
+              } else {
+                console.log("PREENCHA O NOME DA DISCIPLINA");
+                entradaDados.close();
+              }
 
               entradaDados.question(
                 "Digite a primeira nota de 0 a 100: ",

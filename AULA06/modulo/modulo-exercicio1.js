@@ -137,6 +137,38 @@ const verificarSexoProfessor = function (sexoProfessor) {
   return sexo;
 };
 
+const verificarNomeAluno = function (nomeAluno) {
+  if (nomeAluno == "") {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const verificarNomeProfessor = function (nomeProfessor) {
+  if (nomeProfessor == "") {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const verificarNomeCurso = function (nomeCurso) {
+  if (nomeCurso == "") {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const verificarNomeDisciplina = function (nomeDisciplina) {
+  if (nomeDisciplina == "") {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 module.exports = {
   mostrarRelatorio,
   validarInputs,
@@ -147,4 +179,8 @@ module.exports = {
   isNumerosDentroIntervalo,
   isNumerosValidos,
   isNumerosVazio,
+  verificarNomeAluno,
+  verificarNomeProfessor,
+  verificarNomeCurso,
+  verificarNomeDisciplina,
 };
