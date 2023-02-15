@@ -15,11 +15,6 @@ const mostrarRelatorio = function (
   numero4,
   notaExame
 ) {
-  // isNumerosDentroIntervalo()
-  // isNumerosVazio()
-  // isAlunoAprovado(numero1, numero2, numero3, numero4)
-  // verificarSexo()
-
   console.log(`
     O ${nomeAluno} foi ${situacao} na disciplina ${nomeDisciplina}
     Curso: ${nomeCurso}
@@ -30,49 +25,41 @@ const mostrarRelatorio = function (
     `);
 };
 
-const validarInputs = function (numero1, numero2, numero3, numero4) {
-  let status = true;
-  let mensagem = "";
-  if (isNumerosDentroIntervalo(numero1, numero2, numero3, numero4)) {
-    mensagem = "NÚMERO(S) FORA DO INTERVALO";
-    console.log(mensagem);
-    status = false;
-  } else if (isNumerosVazio(numero1, numero2, numero3, numero4)) {
-    mensagem = "NÚMERO(S) VAZIO(S)";
-    console.log(mensagem);
-    status = false;
-  } else if (isNumerosValidos(numero1, numero2, numero3, numero4)) {
-    mensagem = "NÚMERO(S) INVÁLIDO(S)";
-    console.log(mensagem);
-    status = false;
-  } else {
-    return status;
-  }
-};
-
-const isNumerosDentroIntervalo = function (numero1, numero2, numero3, numero4) {
+const validarInput = function (numero) {
   if (
-    (Number(numero1) <= 100 && Number(numero1) >= 0) ||
-    (Number(numero2) <= 100 && Number(numero2) >= 0) ||
-    (Number(numero3) <= 100 && Number(numero3) >= 0) ||
-    (Number(numero4) <= 100 && Number(numero4) >= 0)
+    isNumerosVazio(numero) &&
+    isNumeroValido(numero) &&
+    isNumerosDentroIntervalo(numero)
   ) {
-    return true;
+    return numero;
   } else {
     return false;
   }
 };
 
-const isNumerosVazio = function (numero1, numero2, numero3, numero4) {
-  if (numero1 == "" || numero2 == "" || numero3 == "" || numero4 == "") {
+const isNumerosDentroIntervalo = function (numero) {
+  if (Number(numero) <= 100 && Number(numero) >= 0) {
+    return true;
+  } else {
+    console.log(
+      "NÚMERO FORA DO INTERVALO PERMITIDO. PREENCHA COM UM NÚMERO VÁLIDO"
+    );
+    return false;
+  }
+};
+
+const isNumerosVazio = function (numero) {
+  if (numero == "") {
+    console.log("NUMERO VAZIO. PREENCHA COM UM NÚMERO VÁLIDO");
     return false;
   } else {
     return true;
   }
 };
 
-const isNumerosValidos = function (numero1, numero2, numero3, numero4) {
-  if (isNaN(numero1) || isNaN(numero2) || isNaN(numero3) || isNaN(numero4)) {
+const isNumeroValido = function (numero) {
+  if (isNaN(numero)) {
+    console.log("NÚMERO INVÁLIDO. PREENCHA COM UM NÚMERO VÁLIDO");
     return false;
   } else {
     return true;
@@ -93,9 +80,6 @@ const isAlunoAprovado = function (numero1, numero2, numero3, numero4) {
     situacao = "REPROVADO";
     return true;
   } else if (mediaFinal >= 50 && mediaFinal < 70) {
-    fazerRecuperacao();
-    return false;
-  } else {
     return false;
   }
 };
@@ -112,72 +96,74 @@ const fazerRecuperacao = function (notaExame) {
 };
 
 const verificarSexoAluno = function (sexoAluno) {
-  let sexo = sexoAluno;
-  if (sexo == "M") {
-    sexo = "Aluno";
-  } else if (sexo == "F") {
-    sexo = "Aluna";
+  if (sexoAluno == "M") {
+    sexoAluno = "Aluno";
+    return sexoAluno;
+  } else if (sexoAluno == "F") {
+    sexoAluno = "Aluna";
+    return sexoAluno;
   } else {
+    console.log('DIGITE "M" PARA MASCULINO, OU "F" PARA FEMININO');
     return false;
   }
-  return sexo;
 };
 
 const verificarSexoProfessor = function (sexoProfessor) {
-  let sexo = sexoProfessor;
-  if (sexo == "M") {
-    sexo = sexo = "Professor";
-  } else if (sexo == "F") {
-    sexo = sexo = "Professora";
+  if (sexoProfessor == "M") {
+    sexoProfessor = "Professor";
+    return sexoProfessor;
+  } else if (sexoProfessor == "F") {
+    sexoProfessor = "Professora";
+    return sexoProfessor;
   } else {
+    console.log('DIGITE "M" PARA MASCULINO, OU "F" PARA FEMININO');
     return false;
   }
-
-  return sexo;
 };
 
 const verificarNomeAluno = function (nomeAluno) {
   if (nomeAluno == "") {
+    console.log("PREENCHA O NOME DO ALUNO");
     return false;
   } else {
-    return true;
+    return nomeAluno;
   }
 };
 
 const verificarNomeProfessor = function (nomeProfessor) {
   if (nomeProfessor == "") {
+    console.log("PREENCHA O NOME DO PROFESSOR");
     return false;
   } else {
-    return true;
+    return nomeProfessor;
   }
 };
 
 const verificarNomeCurso = function (nomeCurso) {
   if (nomeCurso == "") {
+    console.log("PREENCHA O NOME DO CURSO");
     return false;
   } else {
-    return true;
+    return nomeCurso;
   }
 };
 
 const verificarNomeDisciplina = function (nomeDisciplina) {
   if (nomeDisciplina == "") {
+    console.log("PREENCHA O NOME DA DISCIPLINA");
     return false;
   } else {
-    return true;
+    return nomeDisciplina;
   }
 };
 
 module.exports = {
   mostrarRelatorio,
-  validarInputs,
+  validarInput,
   isAlunoAprovado,
   verificarSexoAluno,
   verificarSexoProfessor,
   fazerRecuperacao,
-  isNumerosDentroIntervalo,
-  isNumerosValidos,
-  isNumerosVazio,
   verificarNomeAluno,
   verificarNomeProfessor,
   verificarNomeCurso,
