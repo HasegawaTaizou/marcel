@@ -48,6 +48,11 @@ const isNumerosDentroIntervalo = function (numero) {
   }
 };
 
+const converterInput = function (numero) {
+  numero = numero.replace(",", ".");
+  return numero;
+};
+
 const isNumerosVazio = function (numero) {
   if (numero == "") {
     console.log("NUMERO VAZIO. PREENCHA COM UM NÚMERO VÁLIDO");
@@ -78,6 +83,8 @@ const isAlunoAprovado = function (numero1, numero2, numero3, numero4) {
     return true;
   } else if (mediaFinal < 50) {
     situacao = "REPROVADO";
+    mediaRecuperacao = "NÃO PRECISOU FAZER";
+    notaExame = "NÃO PRECISOU FAZER";
     return true;
   } else if (mediaFinal >= 50 && mediaFinal < 70) {
     return false;
@@ -168,4 +175,5 @@ module.exports = {
   verificarNomeProfessor,
   verificarNomeCurso,
   verificarNomeDisciplina,
+  converterInput,
 };
