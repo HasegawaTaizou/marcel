@@ -64,26 +64,26 @@ const listaProdutos = [
   "WebCam",
 ];
 
-const removerElemento = function (nomeProduto) {
-  let listaProdutosMantida = listaProdutos.slice();
-  let nome = nomeProduto;
-  let indice = listaProdutosMantida.indexOf(nome);
+const removerElemento = function (array, nomeItem) {
+  let novaLista = array.slice();
+  let nome = nomeItem;
+  let indice = novaLista.indexOf(nome);
   let status;
 
   //splice - permite remover um elemento do array, pelo indice
   if (indice >= 0) {
-    listaProdutosMantida.splice(indice, 1);
+    novaLista.splice(indice, 1);
     status = true;
   } else {
     status = false;
   }
 
   if (status) {
-    return listaProdutosMantida;
+    return novaLista;
   } else {
     return status;
   }
 };
 
-console.log(removerElemento("Monitor"));
+console.log(removerElemento(listaProdutos,"Monitor"));
 console.log(listaProdutos);
