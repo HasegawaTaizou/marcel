@@ -18,8 +18,14 @@ const getEstadosRegiao = function (regiao) {
         descricao: estado.nome,
       };
     });
-    return listaEstadosRegiao;
+    if (listaEstadosRegiao != undefined && listaEstadosRegiao.estados != "") {
+      return listaEstadosRegiao;
+    } else {
+      status = false;
+    }
   }
+  status = false;
+  return status;
 };
 
 console.log(getEstadosRegiao("Norte"));
