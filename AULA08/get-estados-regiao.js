@@ -1,22 +1,25 @@
 const estadosCidades = require("./estados_cidades.js");
 
 const getEstadosRegiao = function (regiao) {
-  const dadosEstados = estadosCidades.estadosCidades.estados;
-  const listaEstadosRegiao = {};
-  listaEstadosRegiao.estados = [];
+  let status;
+  if (regiao !== "" && isNaN(regiao)) {
+    const dadosEstados = estadosCidades.estadosCidades.estados;
+    let listaEstadosRegiao = {};
+    listaEstadosRegiao.estados = [];
 
-  const regiaoFiltrada = dadosEstados.filter((item) => {
-    return item.regiao == regiao;
-  });
+    const regiaoFiltrada = dadosEstados.filter((estado) => {
+      return estado.regiao === regiao;
+    });
 
-  regiaoFiltrada.forEach((item, index) => {
-    listaEstadosRegiao.regiao = item.regiao;
-    listaEstadosRegiao.estados[index] = {
-      uf: item.sigla,
-      descricao: item.nome,
-    };
-  });
-  console.log(listaEstadosRegiao);
+    regiaoFiltrada.forEach((estado, index) => {
+      listaEstadosRegiao.regiao = estado.regiao;
+      listaEstadosRegiao.estados[index] = {
+        uf: estado.sigla,
+        descricao: estado.nome,
+      };
+    });
+    return listaEstadosRegiao;
+  }
 };
 
-getEstadosRegiao("Norte");
+console.log(getEstadosRegiao("Norte"));

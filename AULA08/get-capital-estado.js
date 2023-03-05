@@ -1,19 +1,32 @@
 const estadosCidades = require("./estados_cidades.js");
 
 const getCapitalEstado = function (siglaEstado) {
-  const ufEstados = estadosCidades.estadosCidades.estados;
-  const capitalEstado = {};
+  let status;
+  if (siglaEstado !== "" && isNaN(siglaEstado)) {
+    const ufEstados = estadosCidades.estadosCidades.estados;
+    let capitalEstado;
 
-  let estadoFiltrado = ufEstados.filter((estado) => {
-    return estado.sigla == siglaEstado;
-  });
-  estadoFiltrado.forEach((estado) => {
-    capitalEstado.uf = estado.sigla;
-    capitalEstado.descricao = estado.nome;
-    capitalEstado.capital = estado.capital;
-  });
-
-  return capitalEstado;
+    let estadoFiltrado = ufEstados.filter((estado) => {
+      if (estado.sigla === siglaEstado) {
+        return estado.sigla === siglaEstado;
+      } else {
+        status = false;
+      }
+    });
+    estadoFiltrado.forEach((estado) => {
+      capitalEstado = {};
+      capitalEstado.uf = estado.sigla;
+      capitalEstado.descricao = estado.nome;
+      capitalEstado.capital = estado.capital;
+    });
+    if (capitalEstado != undefined) {
+      return capitalEstado;
+    } else {
+      status = false;
+    }
+  }
+  status = false;
+  return status;
 };
 
-console.log(getCapitalEstado("AL"));
+console.log(getCapitalEstado("AC"));
