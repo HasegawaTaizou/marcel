@@ -22659,3 +22659,12 @@ const getCidades = function (siglaEstado) {
 };
 
 console.log(getCidades("AC"));
+
+module.exports = {
+  getListaDeEstados,
+  getDadosEstado,
+  getCapitalEstado,
+  getEstadosRegiao,
+  getCapitalPais,
+  getCidades
+}
