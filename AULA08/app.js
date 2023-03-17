@@ -118,38 +118,42 @@ app.get("/capital/:uf", cors(), async function (request, response, next) {
   response.json(dadosCapital);
 });
 
-app.get("/estados-regiao/:regiao", cors(), async function (request, response, next) {
-  let nomeRegiao = request.params.regiao;
-  let statusCode;
-  let dadosEstadosRegiao = {};
-  let regiao;
+app.get(
+  "/estados-regiao/:regiao",
+  cors(),
+  async function (request, response, next) {
+    let nomeRegiao = request.params.regiao;
+    let statusCode;
+    let dadosEstadosRegiao = {};
+    let regiao;
 
-  if (
-    nomeRegiao == "" ||
-    nomeRegiao == undefined ||
-    // nomeRegiao.length != 2 ||
-    !isNaN(nomeRegiao)
-  ) {
-    statusCode = 400;
-    dadosEstadosRegiao.message =
-      "Não é possível processar a requisição, pois a sigla do estado não foi informada, ou não antende a quantidade de caracteres (2 dígitos)";
-  } else {
-    regiao = estadosCidades.getEstadosRegiao(nomeRegiao);
-    if (regiao) {
-      dadosEstadosRegiao = regiao;
-      statusCode = 200;
+    if (
+      nomeRegiao == "" ||
+      nomeRegiao == undefined ||
+      // nomeRegiao.length != 2 ||
+      !isNaN(nomeRegiao)
+    ) {
+      statusCode = 400;
+      dadosEstadosRegiao.message =
+        "Não é possível processar a requisição, pois a sigla do estado não foi informada, ou não antende a quantidade de caracteres (2 dígitos)";
     } else {
-      statusCode = 404;
+      regiao = estadosCidades.getEstadosRegiao(nomeRegiao);
+      if (regiao) {
+        dadosEstadosRegiao = regiao;
+        statusCode = 200;
+      } else {
+        statusCode = 404;
+      }
     }
-  }
 
-  response.status(statusCode);
-  response.json(dadosEstadosRegiao);
-});
+    response.status(statusCode);
+    response.json(dadosEstadosRegiao);
+  }
+);
 
 app.get("/capitais", cors(), async function (request, response, next) {
-  let statusCode
-  let dadosCapitais = {}
+  let statusCode;
+  let dadosCapitais = {};
 
   let listaCapitais = estadosCidades.getCapitalPais();
   if (listaCapitais) {
@@ -159,12 +163,42 @@ app.get("/capitais", cors(), async function (request, response, next) {
     statusCode = 500;
   }
 
-  response.status(statusCode)
-  response.json(dadosCapitais )
+  response.status(statusCode);
+  response.json(dadosCapitais);
 });
 
-app.get("/cidades/:uf", cors(), async function (request, response, next) {
-  let nomeEstado = request.params.uf;
+// app.get("/cidades/:uf", cors(), async function (request, response, next) {
+//   let nomeEstado = request.params.uf;
+//   let statusCode;
+//   let dadosCidades = {};
+//   let cidades;
+
+//   if (
+//     nomeEstado == "" ||
+//     nomeEstado == undefined ||
+//     nomeEstado.length != 2 ||
+//     !isNaN(nomeEstado)
+//   ) {
+//     statusCode = 400;
+//     dadosCidades.message =
+//       "Não é possível processar a requisição, pois a sigla do estado não foi informada, ou não antende a quantidade de caracteres (2 dígitos)";
+//   } else {
+//     cidades = estadosCidades.getCidades(nomeEstado);
+//     if (cidades) {
+//       dadosCidades = cidades;
+//       statusCode = 200;
+//     } else {
+//       statusCode = 404;
+//     }
+//   }
+
+//   response.status(statusCode);
+//   response.json(dadosCidades);
+// });
+
+app.get("v1/senai/cidades", cors(), async function (request, response, next) {
+  let nomeEstado = request.query.uf;
+
   let statusCode;
   let dadosCidades = {};
   let cidades;
@@ -187,11 +221,9 @@ app.get("/cidades/:uf", cors(), async function (request, response, next) {
       statusCode = 404;
     }
   }
-
   response.status(statusCode);
   response.json(dadosCidades);
 });
-
 
 //Permite carregar os endpoints criados e aguardar as requisições pelo protocolo HTTP na porta 8080
 app.listen(8080, function () {
