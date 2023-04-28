@@ -55,7 +55,7 @@ app.get(
 
 //Endpoint: Inserir novo aluno
 app.post(
-  "/aluno",
+  "/v1/lion-school/aluno",
   cors(),
   bodyJSON,
   async function (request, response) {
