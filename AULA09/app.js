@@ -24,10 +24,16 @@ app.use((request, response, next) => {
   next();
 });
 
-//Endpoint: Retorna todos os dados de alunos
-app.get("/aluno", cors(), async function (request, response) {
-  let controllerAluno = require("./controller/controller_aluno.js");
+//criando uma const para realizar o processo de padronização de dados que vao chegar no body da requisição
+const bodyJSON = bodyParser.json();
 
+var controllerAluno = require("./controller/controller_aluno.js");
+
+//Endpoint: Retorna todos os dados de alunos
+// v1/lion-school/aluno
+app.get("/v1/lion-school/alunos", cors(), async function (request, response) {
+  console.log('entrou no get');
+  
   //solicita a controller que retorne todos os alunos do banco de dados
   let dados = await controllerAluno.selecionarTodosAlunos();
 
@@ -48,7 +54,23 @@ app.get(
 );
 
 //Endpoint: Inserir novo aluno
-app.post("v1/lion-school/aluno", cors(), async function (request, response) {});
+app.post(
+  "/aluno",
+  cors(),
+  bodyJSON,
+  async function (request, response) {
+    console.log('entrou no post');
+    
+    //recebe os dados encaminhados no body da requisição
+    let dadosBody = request.body;
+
+    let resultInsertDados = await controllerAluno.inserirAluno(dadosBody)
+    
+    //retorna o status code e a message
+    response.status(resultInsertDados.status)
+    response.json(resultInsertDados)
+  }
+);
 
 //Endpoint: Atualiza um aluno pelo id
 app.put(
