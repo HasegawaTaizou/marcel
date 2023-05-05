@@ -9,30 +9,58 @@ var prisma = new PrismaClient();
 
 //função para inserir um novo registro no banco de dados
 const insertAluno = async function (dadosAluno) {
-  console.log('entrou no post');
 
   //script sql para inserir os dados no banco de dados
   let sql = `insert into tbl_aluno 
   (nome, cpf, rg, data_nascimento, email) 
-  values ('${dadosAluno.nome}', '${dadosAluno.cpf}', '${dadosAluno.rg}', '${dadosAluno.data_nascimento}', '${dadosAluno.email}')`
+  values ('${dadosAluno.nome}', '${dadosAluno.cpf}', '${dadosAluno.rg}', '${dadosAluno.data_nascimento}', '${dadosAluno.email}')`;
 
-  console.log(sql);
-  
-  let result = await prisma.$executeRawUnsafe(sql)
+  let result = await prisma.$executeRawUnsafe(sql);
 
   //executa o script no banco de dados e recebemos o retorno se deu certo ou não
-  if(result) {
-    return true
+  if (result) {
+    return true;
   } else {
-    return false
+    return false;
   }
 };
 
 //Atualizar registro existente no banco de dados
-const updateAluno = function (dadosAluno) {};
+const updateAluno = async function (dadosAluno) {
+  let sql = `update tbl_aluno set
+                nome = '${dadosAluno.nome}',
+                rg = '${dadosAluno.rg}',
+                cpf = '${dadosAluno.cpf}',
+                data_nascimento = '${dadosAluno.data_nascimento}',
+                email = '${dadosAluno.email}'
+              where id = ${dadosAluno.id}
+  `;
+
+  //Executa o script no banco de dados
+  let result = await prisma.$executeRawUnsafe(sql);
+
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 //Excluir um registro existente no banco de dados
-const deleteAluno = function (id) {};
+const deleteAluno = async function (idAluno) {
+  let sql = `delete from tbl_aluno
+              where id = ${idAluno}
+  `;
+
+  //Executa o script no banco de dados
+  let result = await prisma.$executeRawUnsafe(sql);
+
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 //Retorna todos registros do banco de dados
 const selectAllAluno = async function () {
@@ -58,4 +86,6 @@ const selectByIdAluno = function (id) {};
 module.exports = {
   selectAllAluno,
   insertAluno,
+  updateAluno,
+  deleteAluno,
 };
