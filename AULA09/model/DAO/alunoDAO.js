@@ -1,98 +1,113 @@
-//realizar a interação do aluno com o banco de dados
+/*******************************************************************************************
+ * Objetivo: Realizar a interação do ALUNO com o Banco de Dados
+ * Data: 14/04/2023
+ * Autor: Camila Pinheiro
+ * Versão: 1.0
+ ********************************************************************************************/
 
-//importa da biblioteca do prisma client (responsável por manipular dados no banco de dados)
+// Import da biblioteca do prisma client (responsável por manipular dados no banco de dados)
 var { PrismaClient } = require("@prisma/client");
-const { response } = require("express");
 
-//instancia da classe do PrismaClient
+// Instância da classe do PrismaClient
 var prisma = new PrismaClient();
 
-//função para inserir um novo registro no banco de dados
+//Inserir um novo registro no Banco de Dados
 const insertAluno = async function (dadosAluno) {
+  // Script SQL para inserir os dados no Banco de Dados
+  let sql = `insert into tbl_aluno (  nome,
+                                        cpf, 
+                                        rg, 
+                                        data_nascimento, 
+                                        email
+                                      )
+                                        values
+                                      ( '${dadosAluno.nome}',
+                                        '${dadosAluno.cpf}',
+                                        '${dadosAluno.rg}',
+                                        '${dadosAluno.data_nascimento}',
+                                        '${dadosAluno.email}'
+                                      )`;
+  console.log(sql);
 
-  //script sql para inserir os dados no banco de dados
-  let sql = `insert into tbl_aluno 
-  (nome, cpf, rg, data_nascimento, email) 
-  values ('${dadosAluno.nome}', '${dadosAluno.cpf}', '${dadosAluno.rg}', '${dadosAluno.data_nascimento}', '${dadosAluno.email}')`;
-
+  // Executa o script SQL no BD e recebemos o retorno se deu certo ou não
   let result = await prisma.$executeRawUnsafe(sql);
 
-  //executa o script no banco de dados e recebemos o retorno se deu certo ou não
-  if (result) {
-    return true;
-  } else {
-    return false;
-  }
+  if (result) return true;
+  else return false;
 };
 
-//Atualizar registro existente no banco de dados
+//Atualizar um registro existente no Banco de Dados
 const updateAluno = async function (dadosAluno) {
   let sql = `update tbl_aluno set
-                nome = '${dadosAluno.nome}',
-                rg = '${dadosAluno.rg}',
-                cpf = '${dadosAluno.cpf}',
-                data_nascimento = '${dadosAluno.data_nascimento}',
-                email = '${dadosAluno.email}'
-              where id = ${dadosAluno.id}
-  `;
+                  nome = '${dadosAluno.nome}', 
+                  rg = '${dadosAluno.rg}',
+                  cpf = '${dadosAluno.cpf}',
+                  data_nascimento = '${dadosAluno.data_nascimento}',
+                  email = '${dadosAluno.email}'
+              where id = ${dadosAluno.id}`;
 
-  //Executa o script no banco de dados
+  console.log(sql);
+
+  console.log(dadosAluno);
+
   let result = await prisma.$executeRawUnsafe(sql);
 
-  if (result) {
-    return true;
-  } else {
-    return false;
-  }
+  if (result) return true;
+  else return false;
 };
 
-//Excluir um registro existente no banco de dados
+//Excluir um registro do Banco de Dados
 const deleteAluno = async function (idAluno) {
   let sql = `delete from tbl_aluno
-              where id = ${idAluno}
-  `;
+            where id = ${idAluno}`;
 
-  //Executa o script no banco de dados
   let result = await prisma.$executeRawUnsafe(sql);
 
-  if (result) {
-    return true;
-  } else {
-    return false;
-  }
+  if (result) return true;
+  else return false;
 };
 
-//Retorna todos registros do banco de dados
-const selectAllAluno = async function () {
-  //variavel com script sql para executar no BD
+//Retorna todos os registros do Banco de Dados
+const selectAllAluno = async function (dadosAluno) {
+  //Variável com o scriptSQL para executar no BD
   let sql = "select * from tbl_aluno";
 
-  //executa no banco de dados o script sql
-  //$queryRawUnsafe é utilizado quando o script sql está em uma variavel
-  //$queryRaw é utilizado quando passar o script direto no método: $queryRaw('select * from tbl_aluno')
+  // Executa no BD o scriptSQL
+  /*
+    queryRawUnsafe() - é utilizado quando o scriptSQL está em uma variável
+    queryRaw() - é utilizado quando passar o script direto no método (Ex: $queryRaw('select * from tbl_aluno'))*/
   let rsAluno = await prisma.$queryRawUnsafe(sql);
 
-  //valida se o bd retornou algum registro
-  if (rsAluno.length > 0) {
-    return rsAluno;
-  } else {
-    return false;
-  }
+  // Valida se o BD retornou algum registro
+  if (rsAluno.length > 0) return rsAluno;
+  else return false;
 };
 
-//Retorna um registro do banco de dados pelo ID
-const selectByIdAluno = async function (id) {
-  //variavel com script sql para executar no BD
-  let sql = `select * from tbl_aluno where id = ${id}`;
+//Retorna um registro filtrado pelo ID do Banco de Dados
+const selectByIdAluno = async function (idAluno) {
+  //Variável com o scriptSQL para executar no BD
+  let sql = `select * from tbl_aluno
+            where id = ${idAluno}`;
+
+  // Executa no BD o scriptSQL
+  /*
+ queryRawUnsafe() - é utilizado quando o scriptSQL está em uma variável
+ queryRaw() - é utilizado quando passar o script direto no método (Ex: $queryRaw('select * from tbl_aluno'))*/
+  let rsAluno = await prisma.$queryRawUnsafe(sql);
+
+  // Valida se o BD retornou algum registro
+  if (rsAluno.length > 0) return rsAluno;
+  else return false;
+};
+
+const selectLastId = async function () {
+  // Script para retornar apenas o último registro inserido na tabela
+  let sql = "select id from tbl_aluno order by id desc limit 1";
 
   let rsAluno = await prisma.$queryRawUnsafe(sql);
 
-  //valida se o bd retornou algum registro
-  if (rsAluno.length > 0) {
-    return rsAluno;
-  } else {
-    return false;
-  }
+  if (rsAluno.length > 0) return rsAluno[0].id;
+  else return false;
 };
 
 module.exports = {
@@ -101,4 +116,5 @@ module.exports = {
   updateAluno,
   deleteAluno,
   selectByIdAluno,
+  selectLastId,
 };

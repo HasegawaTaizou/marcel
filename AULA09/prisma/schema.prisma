@@ -11,7 +11,7 @@ datasource db {
 }
 
 //Criação de uma entidade no banco de dados
-model tbl_teste_prisma {
+model tbl_teste_prisa{
   id Int @id @default(autoincrement())
-  nome String
+  nome String 
 }

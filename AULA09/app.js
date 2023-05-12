@@ -1,54 +1,89 @@
+/*******************************************************************************************
+ * Objetivo: API para interagir com o Banco de Dados (GET, POST, DELETE, PUT)
+ * Data: 14/04/2023
+ * Autor: Camila Pinheiro
+ * Versão: 1.0
+ ********************************************************************************************/
+
 /*
-para realizar a conexão com o banco de dados iremos utilizar o PRISMA
-npm install prisma --save
-npx prisma
-npx prisma init
-npm install @prisma/client
+   Para realizar a conecxão com o Banco de Dados iremos utilizar o PRISMA 
+       npm install prisma --save
+       npx prisma 
+       npx prisma init 
+       npm install @prisma/client 
 */
 
+// Import das bibliotecas do projeto
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const { request, response } = require("express");
 
+// Cria objeto app utilizando  a classe do express
 const app = express();
 
-var message = require("./controller/modulo/config.js");
-
+// Configura as permissões do cors
 app.use((request, response, next) => {
+  // Permissões de origem da requisição
   response.header("Access-Control-Allow-Origin", "*");
+
+  // Permissões de métodos que serão utilizados na API
   response.header(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
+    "GET, POST, DELETE, PUT, OPTIONS"
   );
-
   app.use(cors());
 
+  // Continua para a leitura dos EndPoints
   next();
 });
 
-//criando uma const para realizar o processo de padronização de dados que vao chegar no body da requisição
+/**************************************************************************************************
+ * EndPoint: Tabela de aluno
+ * Versão: 1.0
+ * Data: 14/04/2023
+ ***************************************************************************************************/
+
+// Criando uma const para realizar o processo de padronização de dados que irão chegar no body da requisição
 const bodyJSON = bodyParser.json();
 
-var controllerAluno = require("./controller/controller_aluno.js");
+// Import da controller do aluno
+const controllerAluno = require("./controller/controller_aluno.js");
+var message = require("./controller/modulo/config.js");
 
-//Endpoint: Retorna todos os dados de alunos
-// v1/lion-school/aluno
-app.get("/v1/lion-school/alunos", cors(), async function (request, response) {
-  //solicita a controller que retorne todos os alunos do banco de dados
+//EndPoint: Retorna todos os dados de alunos
+app.get("/v1/lion-school/aluno", cors(), async function (request, response) {
+  // Solicita a controller que retorne todos os alunos do BD
   let dados = await controllerAluno.selecionarTodosAlunos();
+  console.log(dados);
 
+  // Valida se existem registros para retornar na requisição
   response.status(dados.status);
   response.json(dados);
 });
 
-//Endpoint: Retorna dados do aluno pelo id
+//EndPoint: Retorna dados do aluno pelo ID
 app.get(
   "/v1/lion-school/aluno/:id",
   cors(),
-  async function (request, response) {}
+  async function (request, response) {
+
+    // Recebe o id enviado na requisição 
+    let idAluno = request.params.id;
+    console.log(idAluno);
+    
+
+    // Solicita a controller que retorne todos os alunos do BD
+    let dados = await controllerAluno.buscarIdAluno(idAluno);
+    console.log(dados);
+
+    // Valida se existem registros para retornar na requisição
+    response.status(dados.status);
+    response.json(dados);
+  }
 );
 
-//Endpoint: Inserir novo aluno
+//EndPoint: Inserir um nome aluno
 app.post(
   "/v1/lion-school/aluno",
   cors(),
@@ -57,12 +92,13 @@ app.post(
     let contentType = request.headers["content-type"];
 
     if (String(contentType).toLowerCase() == "application/json") {
-      //recebe os dados encaminhados no body da requisição
+      // recebe os dados encaminhados no body da requisição
       let dadosBody = request.body;
 
+      // Envia os dados para a controller
       let resultInsertDados = await controllerAluno.inserirAluno(dadosBody);
 
-      //retorna o status code e a message
+      // Retorna o status code e a message
       response.status(resultInsertDados.status);
       response.json(resultInsertDados);
     } else {
@@ -72,33 +108,42 @@ app.post(
   }
 );
 
-//Endpoint: Atualiza um aluno pelo id
+//EndPoint: Atualiza um aluno pelo ID
 app.put(
   "/v1/lion-school/aluno/:id",
-  cors(),
   bodyJSON,
+  cors(),
   async function (request, response) {
     let dadosBody = request.body;
 
-    let idAluno = request.params.id;
+    console.log(dadosBody);
 
+    // Rebece o id do aluno
+    let idAluno = request.params.id;
+    // console.log(idAluno);
+
+    // Encaminhando os dados para serem atualizados
     let resultUpdateDados = await controllerAluno.atualizarAluno(
       dadosBody,
       idAluno
     );
+
+    // console.log(resultUpdateDados);
 
     response.status(resultUpdateDados.status);
     response.json(resultUpdateDados);
   }
 );
 
-//Endpoint: Exclui um aluno pelo id
+//EndPoint: Exclui um aluno pelo ID
 app.delete(
   "/v1/lion-school/aluno/:id",
   cors(),
   async function (request, response) {
+    // Rebece o id do aluno
     let idAluno = request.params.id;
 
+    // Encaminhando os dados para serem atualizados
     let resultDeleteDados = await controllerAluno.deletarAluno(idAluno);
 
     response.status(resultDeleteDados.status);
@@ -107,5 +152,5 @@ app.delete(
 );
 
 app.listen(8080, function () {
-  console.log("Servidor aguardando requisições na porta 8080");
+  console.log("Servidor aguardando requisições na porta 8080!");
 });
