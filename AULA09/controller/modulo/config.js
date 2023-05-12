@@ -21,6 +21,11 @@ const ERROR_INVALID_CONTENT_TYPE = {
     message: 'O tipo de mídia Content-Type não é compatível com o servidor, [application/json]'
 }
 
+const ERROR_NOT_FOUND = {
+    status: 404,
+    message: 'Nenhum registro encontrado na requisição'
+}
+
 //constantes de sucesso
 const CREATED_ITEM = {
     status: 201,
@@ -45,5 +50,6 @@ module.exports = {
     UPDATED_ITEM,
     DELETED_ITEM,
     ERROR_INVALID_CONTENT_TYPE,
+    ERROR_NOT_FOUND,
 }
 

@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-var message = require('./controller/modulo/config.js')
+var message = require("./controller/modulo/config.js");
 
 app.use((request, response, next) => {
   response.header("Access-Control-Allow-Origin", "*");
@@ -34,18 +34,11 @@ var controllerAluno = require("./controller/controller_aluno.js");
 //Endpoint: Retorna todos os dados de alunos
 // v1/lion-school/aluno
 app.get("/v1/lion-school/alunos", cors(), async function (request, response) {
-  console.log("entrou no get");
-
   //solicita a controller que retorne todos os alunos do banco de dados
   let dados = await controllerAluno.selecionarTodosAlunos();
 
-  if (dados) {
-    response.json(dados);
-    response.status(200);
-  } else {
-    response.json();
-    response.status(404);
-  }
+  response.status(dados.status);
+  response.json(dados);
 });
 
 //Endpoint: Retorna dados do aluno pelo id
@@ -73,8 +66,8 @@ app.post(
       response.status(resultInsertDados.status);
       response.json(resultInsertDados);
     } else {
-      response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
-      response.json(message.ERROR_INVALID_CONTENT_TYPE)
+      response.status(message.ERROR_INVALID_CONTENT_TYPE.status);
+      response.json(message.ERROR_INVALID_CONTENT_TYPE);
     }
   }
 );

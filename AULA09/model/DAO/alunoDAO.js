@@ -81,11 +81,24 @@ const selectAllAluno = async function () {
 };
 
 //Retorna um registro do banco de dados pelo ID
-const selectByIdAluno = function (id) {};
+const selectByIdAluno = async function (id) {
+  //variavel com script sql para executar no BD
+  let sql = `select * from tbl_aluno where id = ${id}`;
+
+  let rsAluno = await prisma.$queryRawUnsafe(sql);
+
+  //valida se o bd retornou algum registro
+  if (rsAluno.length > 0) {
+    return rsAluno;
+  } else {
+    return false;
+  }
+};
 
 module.exports = {
   selectAllAluno,
   insertAluno,
   updateAluno,
   deleteAluno,
+  selectByIdAluno,
 };
